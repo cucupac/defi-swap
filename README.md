@@ -1,66 +1,13 @@
-## Foundry
+## Defi Swap
 
-**Foundry is a blazing fast, portable and modular toolkit for Ethereum application development written in Rust.**
+This repository contains a simple smart contract implementation of the x \* y = k pricing model, popular in many automated market makers.
 
-Foundry consists of:
+## Purpose
 
--   **Forge**: Ethereum testing framework (like Truffle, Hardhat and DappTools).
--   **Cast**: Swiss army knife for interacting with EVM smart contracts, sending transactions and getting chain data.
--   **Anvil**: Local Ethereum node, akin to Ganache, Hardhat Network.
--   **Chisel**: Fast, utilitarian, and verbose solidity REPL.
+The code in this repository is for research and learning purposes only. Do not deploy and execute the code with real assets.
 
-## Documentation
+## AMM Pricing
 
-https://book.getfoundry.sh/
+For more details, see my article, [An Introduction to Automated Market Making](https://medium.com/codex/an-introduction-to-automated-market-making-994bc76c61f4).
 
-## Usage
-
-### Build
-
-```shell
-$ forge build
-```
-
-### Test
-
-```shell
-$ forge test
-```
-
-### Format
-
-```shell
-$ forge fmt
-```
-
-### Gas Snapshots
-
-```shell
-$ forge snapshot
-```
-
-### Anvil
-
-```shell
-$ anvil
-```
-
-### Deploy
-
-```shell
-$ forge script script/Counter.s.sol:CounterScript --rpc-url <your_rpc_url> --private-key <your_private_key>
-```
-
-### Cast
-
-```shell
-$ cast <subcommand>
-```
-
-### Help
-
-```shell
-$ forge --help
-$ anvil --help
-$ cast --help
-```
+![XYK Pricing Model](images/amm_pricing.png)

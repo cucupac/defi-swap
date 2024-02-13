@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.13;
+pragma solidity ^0.8.21;
 
 import {SafeTransferLib, ERC20} from "solmate/utils/SafeTransferLib.sol";
 import {IERC20} from "src/interfaces/IERC20.sol";
 
 contract DefiSwap {
     // immutables: no SLOAD
-    address public immutable tokenA;
-    address public immutable tokenB;
+    address public immutable tokenX;
+    address public immutable tokenY;
 
     // storage
     uint256 public k;
@@ -15,32 +15,32 @@ contract DefiSwap {
     // errors
     error NotSupported();
 
-    constructor(address _tokenA, address _tokenB) {
-        tokenA = _tokenA;
-        tokenB = _tokenB;
+    constructor(address _tokenX, address _tokenY) {
+        tokenX = _tokenX;
+        tokenY = _tokenY;
     }
 
-    function addLiquidity(uint256 _amtA, uint256 _amtB) public returns (bool) {
+    function addLiquidity(uint256 _amtX, uint256 _amtY) public returns (bool) {
         // Get current amounts
-        uint256 currentAmtA = IERC20(tokenA).balanceOf(address(this));
-        uint256 currentAmtB = IERC20(tokenB).balanceOf(address(this));
+        uint256 currentAmtX = IERC20(tokenX).balanceOf(address(this));
+        uint256 currentAmtY = IERC20(tokenY).balanceOf(address(this));
 
         // Update pricing model
-        uint256 newAmtA = currentAmtA + _amtA;
-        uint256 newAmtB = currentAmtB + _amtB;
-        k = newAmtA * newAmtB;
+        uint256 newAmtX = currentAmtX + _amtX;
+        uint256 newAmtY = currentAmtY + _amtY;
+        k = newAmtX * newAmtY;
 
         // Transfer new liquidity from user
-        SafeTransferLib.safeTransferFrom(ERC20(tokenA), msg.sender, address(this), _amtA);
-        SafeTransferLib.safeTransferFrom(ERC20(tokenB), msg.sender, address(this), _amtB);
+        SafeTransferLib.safeTransferFrom(ERC20(tokenX), msg.sender, address(this), _amtX);
+        SafeTransferLib.safeTransferFrom(ERC20(tokenY), msg.sender, address(this), _amtY);
 
         return true;
     }
 
     function swapExactInput(address _inputToken, address _outputToken, uint256 _inAmt) public returns (bool) {
         // input validation
-        if (_inputToken != tokenA && _inputToken != tokenB) revert NotSupported();
-        if (_outputToken != tokenA && _outputToken != tokenB) revert NotSupported();
+        if (_inputToken != tokenX && _inputToken != tokenY) revert NotSupported();
+        if (_outputToken != tokenX && _outputToken != tokenY) revert NotSupported();
 
         // get current amounts
         uint256 preXAmt = IERC20(_inputToken).balanceOf(address(this));
